@@ -2,6 +2,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi')
 // const multer = require('multer');
+const mongoose = require('mongoose');
 
 var nodemailer = require('nodemailer');
 const router = express.Router();
@@ -581,7 +582,7 @@ router.put('/confirmpassword/:_id', async function (req, res) {
                 password
             }
 
-            const updatedUser = await AdminUser.findByIdAndUpdate(req.params._id, passwordBody, { new: true, runValidators: true });
+            const updatedUser = await User.findByIdAndUpdate(req.params._id, passwordBody, { new: true, runValidators: true });
             if (!updatedUser) {
                 return res.status(404).json({ success: false, message: 'AdminUser not found' });
             }

@@ -6,7 +6,9 @@ const MONGO_URI = 'mongodb+srv://usamasomy:natalia1234@cluster0.q56cs.mongodb.ne
 const connecDB = async () => {
 
     try {
-       await mongoose.connect(MONGO_URI, {});
+       await mongoose.connect(MONGO_URI, {
+        
+       });
         console.log('MongoDB Connected Successfully!')
     } catch (error) {
         console.log('Unable to connect:', error.message);
