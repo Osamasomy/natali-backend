@@ -13,8 +13,9 @@ const EsppReport = require('../models/EsppReport');
 const VestingSchedule = require('../models/VestingScheduleReport');
 const HealthCareReport = require('../models/HealthCareReport');
 const EmailVerification = require('../models/EmailVerification');
+
 const baseEmail="compaim16@gmail.com"
-const basePassword="ogjmvovqgdmijckq"       
+const basePassword="hrlnrxwpwlhtuutl"       
 
 
 const userSignupValidate = Joi.object({
@@ -490,6 +491,7 @@ router.delete("/healthCare/:id", async (req, res)=>{
 
 
 router.put('/forgot-password', async function (req, res, next) {
+    
     let { email } = req.body
     try {
         email = email.toLowerCase();
@@ -512,6 +514,7 @@ router.put('/forgot-password', async function (req, res, next) {
             return result;
         }
         let tokenemail = randomID(4);
+        
         emailVerify = await new EmailVerification({
             createdBy: user.id,
             token: tokenemail
@@ -519,10 +522,10 @@ router.put('/forgot-password', async function (req, res, next) {
         emailVerify.save();
         let transporter = nodemailer.createTransport({
             // host: "smtp.mail.us-east-1.awsapps.com",
-            host: 'smtp.gmail.com',
+            // host: 'smtp.gmail.com',
             service: "gmail",
-            port: 465,
-            secure: false, // true for 465, false for other ports
+            // port: 465,
+            // secure: true, // true for 465, false for other ports
             auth: {
                 user: baseEmail, // generated ethereal user
                 pass: basePassword, // generated ethereal password
@@ -535,6 +538,7 @@ router.put('/forgot-password', async function (req, res, next) {
             subject: 'New Password Request',
             text: 'Hello,\n\n' + 'Please change your password with this token: ' + tokenemail + '.\n'
         };
+        
         await transporter.sendMail(mailOptions)
         
         return res.json({
